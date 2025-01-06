@@ -1,0 +1,86 @@
+#new-travel-state-search {
+  border: 1px solid black;
+  padding: 0.5em;
+  border-radius: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar-div {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 3em;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.add-state-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-state-component {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 2.5em;
+}
+
+#state-image {
+  max-width: 5%;
+  max-height: 5%;
+}
+
+.menu {
+  background-color: lightgray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1em;
+}
+
+.menu-link {
+  padding-right: 1em;
+}
+
+.form-input {
+  border: 2px solid black;
+  margin-bottom: 0.5em;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.add-form div {
+  display: flex;
+  justify-content: center;
+  padding: 0.5em;
+}
+
+.add-form div label {
+  padding-right: 0.25em;
+}
+
+.tags-people-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tags-people-div button {
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+  border-radius: 0.5em;
+  padding: 0.25em;
+}
+
+img {
+  user-select: none;
+}

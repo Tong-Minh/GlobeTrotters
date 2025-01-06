@@ -1,0 +1,194 @@
+{{page-title "Timeline"}}
+{{outlet}}
+
+{{#if this.filterOpen}}
+    <div class="grid md:grid-cols-[18%_82%] grid-cols-[40%_60%] mt-8 mb-16 ml-8 mr-8">
+        <div class="flex flex-col items-center overflow-hidden *:select-none">
+            <img class="h-6 w-6 mb-8 hover:cursor-pointer" src="https://cdn-icons-png.flaticon.com/512/2676/2676818.png" alt="filter"  {{on "click" this.filterToggle}}>
+            <div class="w-full h-auto bg-[#b4cbfb4e] shadow-md p-4" id="filterMenu">
+                <div class="text-center text-2xl text-sky-500 font-bold">
+                    Filter Menu
+                </div>
+                <div class="flex flex-col gap-4 *:hover:cursor-pointer overflow-hidden">
+                    <hr class="w-full border-black">
+                    <div class="relative justify-center flex flex-wrap gap-x-1">
+                        <div class="peer text-center text-xl text-sky-700">
+                            Title
+                        </div>
+                        {{#if this.titleFiltered}}
+                            <div class="right-2 top-0 text-red-600" filter-type="title" {{on "click" this.clearFilterItem}}>
+                                x
+                            </div>
+                        {{/if}}
+                        {{#if this.titleExpanded}}
+                            <img class=" left-2 top-1 w-5 h-auto p-1" src="/images/expand.svg" alt="expand" {{on "click" (fn this.toggleSpecificFilterExpand "title")}}>
+                        {{else}}
+                            <img class=" left-2 top-2 w-5 h-auto p-1" src="/images/collapse.svg" alt="collapse" {{on "click" (fn this.toggleSpecificFilterExpand "title")}}>
+                        {{/if}}
+                    </div>
+                    <div class="flex flex-col" id="title">
+                        <input class="mb-4" type="text" id="searchTitle" name="titleSearch" placeholder="Search Title" {{on "input" this.filterSearchTitle}}>
+                        <div class="max-h-32 overflow-y-auto" id="filter-title">
+                            {{#each this.resultsTitles as |result|}}
+                                <div class="flex gap-1">
+                                    <input class="filter-item" type="checkbox" name={{result}} value={{result}} {{on "change" this.toggleFilterTitle}} >
+                                    <label class="text-ellipsis overflow-hidden">{{result}}</label>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <hr class="w-full border-black">
+                    <div class="relative justify-center flex flex-wrap gap-x-1">
+                        <div class="peer text-center text-xl text-sky-700">
+                            Location
+                        </div>
+                        {{#if this.locationFiltered}}
+                            <div class="right-2 top-0 text-red-600" filter-type="location" {{on "click" this.clearFilterItem}}>
+                                x
+                            </div>
+                        {{/if}}
+                        {{#if this.locationExpanded}}
+                            <img class=" left-2 top-1 w-5 h-auto p-1" src="/images/expand.svg" alt="expand" {{on "click" (fn this.toggleSpecificFilterExpand "location")}}>
+                        {{else}}
+                            <img class=" left-2 top-2 w-5 h-auto p-1" src="/images/collapse.svg" alt="collapse" {{on "click" (fn this.toggleSpecificFilterExpand "location")}}>
+                        {{/if}}
+                    </div>
+                    <div class="flex flex-col" id="location">
+                        <input class="mb-4" type="text" id="searchLocation" name="locationSearch" placeholder="Search Location" {{on "input" this.filterSearchLocation}}>
+                        <div class="max-h-32 overflow-y-auto" id="filter-location">
+                            {{#each this.resultsLocations as |result|}}
+                                <div class="flex gap-1">
+                                    <input class="filter-item" type="checkbox" name={{result}} value={{result}} {{on "change" this.toggleFilterLocation}} >
+                                    <label class="text-ellipsis text-truncate overflow-hidden">{{result}}</label>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <hr class="w-full border-black">
+                    <div class="relative justify-center flex flex-wrap gap-x-1">
+                        <div class="peer text-center text-xl text-sky-700">
+                            Date
+                        </div>
+                        {{#if this.dateFiltered}}
+                            <div class="right-2 top-0 text-red-600" filter-type="date" {{on "click" this.clearFilterItem}}>
+                                x
+                            </div>
+                        {{/if}}
+                        {{#if this.dateExpanded}}
+                            <img class=" left-2 top-1 w-5 h-auto p-1" src="/images/expand.svg" alt="expand" {{on "click" (fn this.toggleSpecificFilterExpand "date")}}>
+                        {{else}}
+                            <img class=" left-2 top-2 w-5 h-auto p-1" src="/images/collapse.svg" alt="collapse" {{on "click" (fn this.toggleSpecificFilterExpand "date")}}>
+                        {{/if}}
+                    </div>
+                    <div class="flex flex-col gap-2" id="date">
+                        {{#if this.showAfter}}
+                            <div class="flex sm:flex-row flex-col gap-2 input-container">
+                                <label class="text-sky-700" for="filterAfter">After</label>
+                                <input class="w-full" type="date" id="filterAfter" name="after" placeholder="After" {{on "change" this.setAfter}}>
+                            </div>
+                        {{/if}}
+                        <select id="temporal" {{on "change" this.setTemporal}}>
+                            <option value="before">Before</option>
+                            <option value="between">Between</option>
+                            <option value="after">After</option>
+                        </select>
+                        {{#if this.showBefore}}
+                            <div class="flex sm:flex-row flex-col gap-2 w-full input-container">
+                                <label class="text-sky-700" for="filterBefore">Before</label>
+                                <input class="" type="date" id="filterBefore" name="before" placeholder="Before" {{on "change" this.setBefore}}>
+                            </div>
+                        {{/if}}
+                    </div>
+                    <hr class="w-full border-black">
+                    <div class="relative justify-center flex flex-wrap gap-x-1">
+                        <div class="peer text-center text-xl text-sky-700">
+                            People
+                        </div>
+                        {{#if this.peopleFiltered}}
+                            <div class="right-2 top-0 text-red-600" filter-type="people" {{on "click" this.clearFilterItem}}>
+                                x
+                            </div>
+                        {{/if}}
+                        {{#if this.peopleExpanded}}
+                            <img class=" left-2 top-1 w-5 h-auto p-1" src="/images/expand.svg" alt="expand" {{on "click" (fn this.toggleSpecificFilterExpand "people")}}>
+                        {{else}}
+                            <img class=" left-2 top-2 w-5 h-auto p-1" src="/images/collapse.svg" alt="collapse" {{on "click" (fn this.toggleSpecificFilterExpand "people")}}>
+                        {{/if}}
+                    </div>
+                    <div class="flex flex-col" id="people">
+                        <input class="mb-4" type="text" id="searchPeople" name="searchPeople" placeholder="Search People" {{on "input" this.filterSearchPeople}}>
+                        <div class="max-h-32 overflow-y-auto" id="filter-people">
+                            {{#each this.resultsPeople as |result|}}
+                                <div class="flex gap-1">
+                                    <input class="filter-item" type="checkbox" name={{result.name}} value={{result.name}} {{on "change" this.toggleFilterPeople}} >
+                                    <label class="text-ellipsis text-truncate overflow-hidden">{{result.name}}</label>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <hr class="w-full border-black">
+                    <div class="relative justify-center flex flex-wrap gap-x-1">
+                        <div class="peer text-center text-xl text-sky-700">
+                            Tag
+                        </div>
+                        {{#if this.tagsFiltered}}
+                            <div class="right-2 top-0 text-red-600" filter-type="tags" {{on "click" this.clearFilterItem}}>
+                                x
+                            </div>
+                        {{/if}}
+                        {{#if this.tagsExpanded}}
+                            <img class=" left-2 top-1 w-5 h-auto p-1" src="/images/expand.svg" alt="expand" {{on "click" (fn this.toggleSpecificFilterExpand "tags")}}>
+                        {{else}}
+                            <img class=" left-2 top-2 w-5 h-auto p-1" src="/images/collapse.svg" alt="collapse" {{on "click" (fn this.toggleSpecificFilterExpand "tags")}}>
+                        {{/if}}
+                    </div>
+                    <div class="flex flex-col" id="tags">
+                        <input class="mb-4" type="text" id="searchTags" name="searchTags" placeholder="Search Tags" {{on "input" this.filterSearchTags}}>
+                        <div class="max-h-32 overflow-y-auto" id="filter-tags">
+                            {{#each this.resultsTags as |result|}}
+                                <div class="flex gap-1">
+                                    <input class="filter-item" type="checkbox" name={{result}} value={{result}} {{on "change" this.toggleFilterTag}} >
+                                    <label class="text-ellipsis text-truncate overflow-hidden">{{result}}</label>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    
+                    <div class="text-red-600" {{on "click" this.clearFilter}}>
+                        Clear Filter
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col space-y-4 items-center">
+            <div class="text-center">
+                <div class="text-4xl font-bold">
+                    Timeline
+                </div>
+            </div>
+            <hr class="w-full border-black">
+
+            {{#each this.currentLocations as |location|}}
+                <Timeline-Item @location={{location}} />
+            {{/each}}
+        </div>
+    </div>
+{{else}}
+    <div class="mt-8 mb-16 ml-8 mr-8">
+        <div class="flex relative hover:cursor-pointer flex-col items-center" {{on "click" this.filterToggle}}>
+            <img class="absolute h-6 w-6 left-12 top-0 " src="https://cdn-icons-png.flaticon.com/512/2676/2676818.png" alt="filter">
+        </div>
+        <div class="flex flex-col space-y-4 items-center">
+            <div class="text-center">
+                <div class="text-4xl font-bold">
+                    Timeline
+                </div>
+            </div>
+            <hr class="w-full border-black">
+
+            {{#each this.currentLocations as |location|}}
+                <Timeline-Item @location={{location}} />
+            {{/each}}
+        </div>
+    </div>
+{{/if}}

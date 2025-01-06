@@ -1,0 +1,30 @@
+{{page-title "Achievements"}}
+
+<h2 class=" font-bold text-4xl flex justify-center items-center p-10">Achievements</h2>
+
+<section class=" max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 auto-rows-[250px] place-items-center">
+    {{#each @model.achievements as |achievement|}}
+        {{#if (lt @model.achievementCount achievement.reqNum)}}
+        <div class=" transition ease-in-out delay-150 flex justify-center items-center flex-col text-center p-2 max-w-[250px]" {{on "click" (fn this.achieveInfo achievement.number)}}> {{!-- bg-neutral-100 border-2 rounded-xl --}}
+            <div class=" class-{{achievement.number}}-img flex text-black justify-center items-center text-center text-xl font-bold text-gray-600  max-w-[250px] opacity-50 hover:cursor-pointer">{{achievement.name}}</div>
+            <img class=" class-{{achievement.number}}-img flex justify-center items-center w-[250px] h-[250px] p-4 -mt-8 opacity-50 hover:cursor-pointer" src="/images/achievement.svg" id={{achievement.number}}>
+            <div class=" class-{{achievement.number}}-img absolute justify-center items-center text-4xl opacity-50 hover:cursor-pointer">{{achievement.reqNum}}</div>
+            <div class=" class-{{achievement.number}}-info hidden flex justify-center items-center text-center text-xl font-bold text-gray-600 max-w-[250px] opacity-50 hover:cursor-pointer">{{achievement.name}}</div>
+            <div class=" class-{{achievement.number}}-info hidden playfair-display flex justify-center items-center text-center pl-4 pr-4 max-w-[250px] italic opacity-50 hover:cursor-pointer">{{achievement.description}}</div>
+            <div class=" class-{{achievement.number}}-info hidden playfair-display-bold flex justify-center items-center text-center p-2 max-w-[250px] text-xs font-semibold opacity-50 hover:cursor-pointer">{{achievement.requirement}}</div>
+        </div>
+        {{else}}
+        <div class=" transition ease-in-out delay-150 flex justify-center items-center flex-col text-center p-2 max-w-[250px] hover:cursor-pointer" {{on "click" (fn this.achieveInfo achievement.number)}}> {{!-- bg-neutral-100 border-2 rounded-xl --}}
+            <div class=" class-{{achievement.number}}-img flex text-black justify-center items-center text-center text-xl font-bold text-gray-600  max-w-[250px] hover:cursor-pointer">{{achievement.name}}</div>
+            <img class=" class-{{achievement.number}}-img flex justify-center items-center w-[250px] h-[250px] p-4 -mt-8 hover:cursor-pointer" src="/images/achievement.svg" id={{achievement.number}}>
+            <div class=" class-{{achievement.number}}-img absolute justify-center items-center text-4xl hover:cursor-pointer">{{achievement.reqNum}}</div>
+            <div class=" class-{{achievement.number}}-info hidden flex justify-center items-center text-center text-xl font-bold text-gray-600 max-w-[250px] hover:cursor-pointer">{{achievement.name}}</div>
+            <div class=" class-{{achievement.number}}-info hidden playfair-display flex justify-center items-center text-center pl-4 pr-4 max-w-[250px] italic hover:cursor-pointer">{{achievement.description}}</div>
+            <div class=" class-{{achievement.number}}-info hidden playfair-display-bold flex justify-center items-center text-center p-2 max-w-[250px] text-xs font-semibold hover:cursor-pointer">{{achievement.requirement}}</div>
+        </div>
+        {{/if}}
+    {{/each}}
+</section>
+
+
+{{outlet}}

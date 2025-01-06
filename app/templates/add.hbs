@@ -1,0 +1,108 @@
+{{page-title "Add"}}
+<form class=" add-form" {{on "submit" (fn this.addTrip @model.location)}}>
+  <div class="flex justify-center items-center flex-col">
+    <div class="mt-10 text-xl">Tell us about your trip to</div>
+    <div class=" -mt-10 text-6xl md:text-8xl text-center">{{@model.location}}</div>
+    {{#if @model.inUS}}
+      <img class="flex justify-center items-center w-1/2 h-auto max-w-[400px] blue-filter" src="/images/states/{{@model.two}}/1024.png"/>
+    {{else}}
+      <img class="flex justify-center items-center w-1/2 h-auto max-w-[400px] blue-filter" src="/images/countries/{{@model.two}}/1024.png"/>
+    {{/if}}
+    <LinkTo @route="add-state" class=" mt-10 text-center playfair-display-bold text-[#e2eafc] bg-[#274060] hover:bg-[#83b0e1] hover:text-[#274060] p-2 w-20 rounded-lg">Back</LinkTo>
+  </div>
+
+  <div>
+    <div class="flex flex-col justify-center items-center rounded-xl p-10 w-11/12">
+    
+    <div class="relative z-0 w-2/3 mb-2 group mt-3">
+      <input maxlength="20" type="text" name="titleField" id="titleField" class=" playfair-display-bold block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-[#274060] appearance-none focus:outline-none focus:ring-0 peer" placeholder=" " required />
+      <label for="titleField" class=" playfair-display peer-focus:font-medium absolute text-m duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Trip Title</label>
+    </div>
+
+
+    <div class="relative z-0 w-2/3 mb-3 group">
+      <textarea name="descriptionField" id="descriptionField" rows="2" class=" playfair-display-bold min-h-[60px] block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-[#274060] appearance-none focus:outline-none focus:ring-0 peer" placeholder=" " required></textarea>
+      <label for="descriptionField" class=" playfair-display peer-focus:font-medium absolute text-m duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-[1.2rem] peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+    </div>
+
+    <div class="relative z-0 w-2/3 mb-2 group">
+      <input type="date" name="startField" id="startField" class=" playfair-display-bold block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-[#274060] appearance-none focus:outline-none focus:ring-0 peer" placeholder=" " {{on "input" (fn this.checkDates "startDate")}} required />
+      <label for="startField" class=" playfair-display peer-focus:font-medium absolute text-lg duration-300 transform -translate-y-6 scale-75 top-3 -z-10 ">Start Date</label>
+    </div>
+
+    <div class="relative z-0 w-2/3 mb-2 group">
+      <input type="date" name="endField" id="endField" class=" playfair-display-bold block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-[#274060] appearance-none focus:outline-none focus:ring-0 peer" placeholder=" "  {{on "input" (fn this.checkDates "endDate")}} required />
+      <label for="endField" class=" playfair-display peer-focus:font-medium absolute text-lg duration-300 transform -translate-y-6 scale-75 top-3 -z-10 ">End Date</label>
+    </div>
+    
+    {{#unless this.dateOrder}}
+    <div class="playfair-display text-red-600">Start Date must be before the End Date.</div>
+    {{/unless}}
+
+    <div class="relative z-0 w-2/3 mb-2 flex flex-wrap">
+      <div class="w-full">
+        <input type="text" name="tagField" id="tagField" maxlength="15" class=" playfair-display-bold block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#274060] appearance-none focus:outline-none focus:ring-0 peer" placeholder=" "/>
+        <label for="tagField" class=" playfair-display-bold peer-focus:font-medium absolute text-m duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tags</label>
+        <button type="button" class="bg-[#274060] rounded-r rounded-t pl-3 pr-3 font-bold text-xl text-[#e2eafc] hover:bg-[#83b0e1] hover:text-[#274060]" {{on "click" this.addTag}}>+</button>
+      </div>
+      <div class="flex flex-wrap flex-row w-2/3 gap-2" id="tagdiv">
+      {{#each this.tags as |tag index| }}
+        <div class="playfair-display-bold text-[#e2eafc] bg-[#274060] hover:bg-[#83b0e1] hover:text-[#274060] rounded-md px-3 py-1 cursor-pointer" id="tag-{{index}}" {{on "click" (fn this.deleteTag index tag)}}>{{tag}}</div>
+      {{/each}}
+      </div>
+    </div>
+
+    <div class="relative z-0 w-2/3 mb-2 flex-wrap">
+      <div class="w-full">
+        <input type="text" name="peopleField" id="peopleField" maxlength="25" class=" playfair-display-bold block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#274060] appearance-none focus:outline-none focus:ring-0 peer" placeholder=" "/>
+        <label for="peopleField" class=" playfair-display-bold peer-focus:font-medium absolute text-m duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">People</label>
+        <button type="button" class="bg-[#274060] rounded-r rounded-t pl-3 pr-3 font-bold text-xl text-[#e2eafc] hover:bg-[#83b0e1] hover:text-[#274060]" {{on "click" this.addPerson}}>+</button>
+      </div>
+      {{#if this.duplicatePeople}}
+        <div class="mt-2">
+          
+          <div class="flex flex-wrap gap-2 mt-2">
+            <h3 class="text-4xl playfair-display-bold">Options:</h3>
+            {{#each this.duplicatePeople as |person index|}}
+              <div class="flex items-center cursor-pointer bg-[#274060] text-[#e2eafc] rounded-md px-3 py-2 hover:bg-[#83b0e1] hover:text-[#274060]" {{on "click" (fn this.addPersonFromDuplicates person)}}>
+                <img src="{{person.pic.link}}" alt="{{person.name}}" class="h-8 w-8 rounded-full mr-2" />
+                <span class="playfair-display-bold">{{person.name}}</span>
+              </div>
+            {{/each}}
+              <div class="flex items-center cursor-pointer bg-[#274060] text-[#e2eafc] rounded-md px-3 py-2 hover:bg-[#83b0e1] hover:text-[#274060]" {{on "click" this.createPerson}}>
+                <img src="/images/plus.svg" class="h-8 w-8 rounded-full mr-2" />
+                <span class="playfair-display-bold">New {{this.targetName}}</span>
+              </div>
+          </div>
+        </div>
+      {{/if}}
+      <div class="display-people flex flex-wrap flex-row w-2/3 gap-2" id="peoplediv">
+      {{#each this.people as |person index| }}
+      <div id="person-{{index}}" class="flex items-center cursor-pointer bg-[#274060] text-[#e2eafc] rounded-md px-3 py-2 hover:bg-[#83b0e1] hover:text-[#274060]" {{on "click" (fn this.deletePerson index person)}}>
+        <img src="{{person.pic.link}}" class="h-8 w-8 rounded-full mr-2" />
+        <span class="playfair-display-bold">{{person.name}}</span>
+      </div>
+      {{/each}}
+      </div>
+    </div>
+
+  <div style="relative z-0 w-2/3 mb-2 group">
+    <label for="pictures" class=" playfair-display-bold cursor-pointer text-[#e2eafc] bg-[#274060] hover:bg-[#83b0e1] hover:text-[#274060] rounded py-2 px-1">Upload Photos</label>
+    <input type="file" id="pictures" class=" playfair-display-bold appearance-none absolute opacity-0 cursor-pointer" 
+      accept="image/*" multiple {{on "change" this.updatePics}}>
+  </div>
+  <div class="photo-preview playfair-display mb-2 " id="photo-preview">
+    No pictures selected
+  </div>
+
+  <button type="submit" class="mb-11 playfair-display-bold text-[#e2eafc] bg-[#274060] hover:bg-[#83b0e1] hover:text-[#274060] p-2 rounded-md">Submit</button>
+
+    
+    
+
+  </div>
+  </div>
+  
+</form>
+
+{{outlet}}

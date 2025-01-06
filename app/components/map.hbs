@@ -1,0 +1,12 @@
+<div class="flex justify-center items-center gap-1 mt-3">
+    <div class="playfair-display">Selected: </div> <div id="currentLocation" class="playfair-display">None</div>
+</div>
+<div class=" flex playfair-display justify-center items-center text-xs">- Double click a location to confirm - </div>
+
+{{#if @isUS}}
+    <div id="map" class=" h-96 m-8 rounded-lg shadow-md" {{did-insert this.initializeMap}}{{on "click" this.currentLocation}}></div>
+{{else}}
+        <div id="chartdiv" class=" h-96 m-8" {{did-insert this.initGlobe}}></div>
+{{/if}}
+
+{{yield}}

@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: "Lilita One", sans-serif;
+  background-color: #e2eafc;
+  color: #274060;
+
+  /* font-weight: 400; */
+  font-style: normal;
+}
+
+.index {
+  overflow: hidden;
+}
+
+.blue-filter {
+  filter: invert(32%) sepia(67%) saturate(893%) hue-rotate(183deg)
+    brightness(100%) contrast(90%);
+}
+
+#dropdown #ham path {
+  stroke: white;
+}
+
+/* 
+#chartdiv {
+  pointer-events: none; 
+} */
+
+/* #map { height: 180px; } */
+
+.playfair-display {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.playfair-display-bold {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: bold;
+}
+
+/* https://stackoverflow.com/questions/51334960/how-to-show-calendar-popup-when-inputtype-date-is-on-focus */
+
+.input-container input {
+  border: none;
+  box-sizing: border-box;
+  outline: 0;
+  position: relative;
+  width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  inset: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  position: absolute;
+  width: auto;
+}

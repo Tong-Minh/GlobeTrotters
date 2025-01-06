@@ -1,0 +1,60 @@
+{{page-title "Visited"}}
+
+<h2 class=" font-bold text-4xl flex justify-center items-center p-10">Visited</h2>
+<h3 class=" playfair-display-bold font-bold text-2xl flex justify-center items-center p-6">United States</h3>
+
+<section class=" max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 auto-rows-[250px] place-items-center">
+    {{#each @model as |visited|}}
+        {{#if (and (eq visited.country "United States") visited.state)}} {{!-- if its a us state --}}
+            <LinkTo @route="trip" @model={{visited.id}}>
+            <div class="flex justify-center items-center flex-col">
+                <img class="flex justify-center items-center max-w-[100px] blue-filter" src={{visited.image}}/>
+                <div class="flex playfair-display-bold text-2xl font-semibold mt-2">
+                    <p class="max-w-44 truncate">{{visited.title}}</p>
+                </div>
+                <div class="flex playfair-display-bold justify-center items-center text-center text-xs font-semibold" >
+                    {{visited.state}}
+                </div>
+            </div>
+            </LinkTo>
+        {{/if}}
+    {{/each}}
+</section>
+
+<h3 class=" playfair-display-bold font-bold text-2xl flex justify-center items-center p-6">World Countries</h3>
+
+<section class=" max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 auto-rows-[250px] place-items-center">
+    {{#each @model as |visited|}}
+        {{#if (or (and (eq visited.country "United States") (eq visited.state "")) (not (eq visited.country "United States")))}} {{!-- if its a us state --}}
+            <LinkTo @route="trip" @model={{visited.id}}>
+            <div class="flex justify-center items-center flex-col">
+                <img class="flex justify-center items-center h-[100px] w-[100px] blue-filter" src={{visited.image}}/>
+                <div class="flex playfair-display-bold justify-center items-center text-center text-2xl font-semibold mt-2" >
+                    {{visited.title}}
+                </div>
+                <div class="flex playfair-display-bold justify-center items-center text-center text-xs font-semibold" >
+                    {{visited.country}}
+                </div>
+            </div>
+            </LinkTo>
+        {{/if}}
+    {{/each}}
+</section>
+
+<div class=" flex justify-center items-center pb-10">
+    <img class=" " src="/images/plus-circle.png" {{on "click" this.addVisit}}/> 
+</div>
+
+<div id="achievement-container" class=" hidden flex w-96 h-[500px] fixed top-1/2 left-1/2 -translate-y-[250px] -translate-x-48 bg-slate-200 rounded-xl justify-center items-center flex-col border-4 border-black">
+    <img class=" fixed w-[30px] h-[30px] top-0 left-0 translate-y-[15px] translate-x-[15px]" src="/images/x.svg" {{on "click" this.exitAchieve}}>
+    <img class=" flex justify-center items-center w-[300px] h-[300px] p-4 -mt-8" src="/images/achievement.svg">
+    <div id="reqNum" class=" absolute justify-center items-center text-4xl -translate-y-[55px]"></div>
+    <div class=" playfair-display font-bold text-xl flex justify-center items-center ">You received the achievement</div>
+    <div id="name" class=" font-bold text-3xl flex justify-center items-center "></div>
+    <div id="requirement" class=" playfair-display font-bold text-sm flex justify-center items-center pt-2"></div>
+</div>
+
+
+
+{{outlet}}
+

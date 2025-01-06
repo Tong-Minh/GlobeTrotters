@@ -1,0 +1,29 @@
+{{yield}}
+<div class=" bg-[#aecbeb] flex w-full h-16 items-center shadow-md overflow-hidden *:select-none">
+    <div class="ml-4 md:hidden top-2 left-0">
+        {{#if this.open}}
+            <div id="dropdown" class=" w-36 h-auto absolute flex-col top-0 left-0 items-center space-y-4 bg-white border-2 text-white p-4 rounded-md z-10">
+                <img src="/images/Ham.svg" alt="hamburger icon" {{on "click" this.toggleMenu}}>
+                <div class="justify-center flex flex-col *:hover:cursor-pointer text-[#274060]">
+                    <div class="text-xl" {{on "click" (fn this.transitionTo 'visited')}}>Visited</div> 
+                    <div class="text-xl" {{on "click" (fn this.transitionTo 'add-state')}}>Add Trip</div> 
+                    <div class="text-xl" {{on "click" (fn this.transitionTo 'timeline')}}>Timeline</div> 
+                    <div class="text-xl" {{on "click" (fn this.transitionTo 'achievements')}}>Achievements</div>
+                    <div class="text-xl" {{on "click" this.signOut}}>Sign Out</div> 
+                </div>
+            </div>
+            <div class="fixed w-screen h-screen" {{on "click" this.toggleMenu}}></div>
+        {{else}}
+            <div id="dropdown" class="w-32 h-auto absolute flex-col top-0 left-0 items-center space-y-4 p-4">
+                <img src="/images/Ham.svg" alt="hamburger icon" {{on "click" this.toggleMenu}}>
+            </div>
+        {{/if}}
+    </div>
+    <div class="hidden ml-4 items-center *:hover:cursor-pointer md:flex">
+        <div class="text-xl p-2 hover:text-[#e1ecf7]" {{on "click" (fn this.transitionTo 'visited')}}>Visited</div> |
+        <div class="text-xl p-2 hover:text-[#e1ecf7]" {{on "click" (fn this.transitionTo 'add-state')}}>Add Trip</div> |
+        <div class="text-xl p-2 hover:text-[#e1ecf7]" {{on "click" (fn this.transitionTo 'timeline')}}>Timeline</div> |
+        <div class="text-xl p-2 hover:text-[#e1ecf7]" {{on "click" (fn this.transitionTo 'achievements')}}>Achievements</div> |
+        <div class="text-xl p-2 hover:text-[#e1ecf7]" {{on "click" this.signOut}}>Sign Out</div> 
+    </div>
+</div>

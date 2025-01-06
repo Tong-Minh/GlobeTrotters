@@ -1,0 +1,49 @@
+<div class="flex flex-col items-center space-y-8 w-3/4">
+    <img src="/images/Divide.svg" alt="divider icon">
+    <div class="flex flex-col items-center">
+        <img class="w-1/2 h-auto max-w-64 blue-filter hover:cursor-pointer" src="{{@location.image}}" alt="{{@title}}" {{on "click" (fn this.routeTrip @location.id)}}>
+        <h1 class="text-xl font-bold hover:cursor-pointer" {{on "click" (fn this.routeTrip @location.id)}}>
+            {{@location.title}}
+        </h1>
+        <h2 class="text-xs mt-0 playfair-display">
+            {{@location.startDate}}
+        </h2>
+    </div>
+    <div class="flex w-full flex-wrap space-x-4 justify-center">
+        {{#each @location.people as |profile|}}
+            <div class="flex flex-col items-center">
+                {{#if profile.pic.link}}
+                    <img src="{{profile.pic.link}}" alt="{{profile}}" class="h-16 w-16 object-cover rounded-full">
+                {{else}}
+                    <img src="/images/profile.svg" alt="{{profile}}" class="h-16 w-16 object-cover rounded-full">
+                {{/if}}
+                <h3 class="text-sm">
+                    {{profile.name}}
+                </h3>
+            </div>
+        {{/each}}
+    </div>
+    {{#if @location.photos}}
+        <div class="rounded-md p-4">
+            <div class="max-h-96 overflow-y-auto p-4">
+                <div class="columns-1 lg:columns-3 xl:columns-4 2xl:columns-5 gap-4">
+                    {{#each @location.photos as |image|}}
+                        <div class="break-inside-avoid-column mb-4 shadow-lg p-3 pb-6 bg-white">
+                            <img class="w-full h-auto rounded-lg image shadow-inner-lg" src="{{image.link}}" alt="{{@title}}" id={{image.id}}>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    {{/if}}
+    <div class="flex flex-col w-full p-2 *:gap-2">
+        <div class="flex w-auto max-w-3/4 flex-wrap justify-center">
+            {{#each @location.tags as |tag|}}
+                <div class="text-[#e2eafc] bg-[#274060] rounded-full text-sm p-2">
+                    #{{tag}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<hr class="w-1/2 border-black border-2">

@@ -1,0 +1,37 @@
+{{page-title "Add"}}
+{{outlet}}
+
+<h2 class=" font-bold text-4xl flex justify-center items-center p-10">New Travels</h2>
+<div class="search-bar-div">
+  <input type="text" id="new-travel-state-search" name="new-travel-state-search" placeholder="Search Location" class="playfair-display select-none" {{on "input" this.updateSearch}}>
+</div>
+
+<label class=" flex justify-center items-center cursor-pointer -mt-8"> {{!-- got this from https://flowbite.com/docs/forms/toggle/ and changed it for toggle--}}
+  <span class=" pr-3 playfair-display text-sm font-medium text-gray-900">United States</span>
+  <input id="toggle-btn" type="checkbox" value="" class="sr-only peer" {{on "click" this.toggle}} checked={{not this.isUnitedStates}}>
+  <div class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#4d82d6]"></div>
+  <span class=" pl-3 playfair-display text-sm font-medium text-gray-900">Worldwide</span>
+</label>
+
+<Map
+  @isUS={{this.isUnitedStates}}
+/>
+
+<section id="searchBody" class=" hidden max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 auto-rows-[250px] place-items-center">
+  {{#if this.isUnitedStates}}
+    {{#each this.filteredStates as |state|}}
+      <div id={{state.name}} class=" flex justify-center items-center flex-col" {{on "click" this.getName}}>
+        <img id={{state.name}} class=" flex justify-center items-center max-w-[100px] blue-filter" src="/images/states/{{state.two}}/1024.png"/>
+        <div id={{state.name}} class=" flex playfair-display-bold justify-center items-center text-center text-xl font-semibold">{{state.name}}</div>
+      </div>
+    {{/each}}
+  {{else}}
+    {{#each this.filteredCountries as |country|}}
+      <div id={{country.name}} class=" flex justify-center items-center flex-col" {{on "click" this.getName}}>
+        <img id={{country.name}} class="flex justify-center items-center max-w-[100px] blue-filter" src="/images/countries/{{country.two}}/vector.svg"/>
+        <div id={{country.name}} class=" flex playfair-display-bold justify-center items-center text-center text-xl font-semibold">{{country.name}}</div>
+      </div>
+    {{/each}}
+  {{/if}}
+</section>
+
